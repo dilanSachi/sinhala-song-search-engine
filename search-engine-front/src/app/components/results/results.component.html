@@ -1,0 +1,11 @@
+<div >
+    <div *ngFor="let result of results" style="width: 50vw;justify-content: center;margin: 0 auto;padding: 10px;">
+        <mat-card class="example-card">
+            <mat-card-header>
+                <mat-card-title>
+                    {{result._source.title}}
+                </mat-card-title>
+            </mat-card-header>
+        </mat-card>
+    </div>
+</div>
