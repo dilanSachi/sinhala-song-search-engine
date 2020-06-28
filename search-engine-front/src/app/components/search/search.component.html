@@ -5,7 +5,7 @@
                 <mat-form-field class="example-form-field">
                     <mat-label>Enter Your Search Query</mat-label>
                     <input matInput type="text" [(ngModel)]="query">
-                    <button mat-button *ngIf="query" matSuffix mat-icon-button aria-label="Clear" (click)="query=''">
+                    <button mat-button *ngIf="query" matSuffix mat-icon-button aria-label="Clear" (click)="clear()">
                         <mat-icon>close</mat-icon>
                     </button>
                 </mat-form-field>
@@ -13,5 +13,31 @@
             </mat-card-title>
         </mat-card-header>
     </mat-card>
+</div>
+<div *ngIf="searched" style="text-align: center;">
+    <button mat-button color="primary" class="dropdown-button" [matMenuTriggerFor]="menuArtists">Filter
+        By Artist</button>
+    <mat-menu #menuArtists="matMenu">
+        <button *ngFor="let item of aggregations.artist_filter.buckets" mat-menu-item (click)="filterByArtist(item.key)">{{item.key}}
+            ({{item.doc_count}})</button>
+    </mat-menu>
+    <button mat-button color="primary" class="dropdown-button" [matMenuTriggerFor]="menuComposers">Filter
+        By Composer</button>
+    <mat-menu #menuComposers="matMenu">
+        <button *ngFor="let item of aggregations.writer_filter.buckets" mat-menu-item (click)="filterByComposer(item.key)">{{item.key}}
+            ({{item.doc_count}})</button>
+    </mat-menu>
+    <button mat-button color="primary" class="dropdown-button" [matMenuTriggerFor]="menuMusic">Filter
+        By Music</button>
+    <mat-menu #menuMusic="matMenu">
+        <button *ngFor="let item of aggregations.composer_filter.buckets" mat-menu-item (click)="filterByMusic(item.key)">{{item.key}}
+            ({{item.doc_count}})</button>
+    </mat-menu>
+    <button mat-button color="primary" class="dropdown-button" [matMenuTriggerFor]="menuGenre">Filter
+        By Genre</button>
+    <mat-menu #menuGenre="matMenu">
+        <button *ngFor="let item of aggregations.genre_filter.buckets" mat-menu-item (click)="test(item.key, item.doc_count)">{{item.key}}
+            ({{item.doc_count}})</button>
+    </mat-menu>
 </div>
 <app-results [searchResult]="resultEvent"></app-results>

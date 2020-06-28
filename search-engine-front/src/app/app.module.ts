@@ -10,18 +10,20 @@ import { SearchComponent } from './components/search/search.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatFormFieldModule } from '@angular/material';
+import { MatFormFieldModule, MatMenuModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
 import { ResultsComponent } from './components/results/results.component';
+import { SongComponent } from './components/song/song.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     SearchComponent,
-    ResultsComponent
+    ResultsComponent,
+    SongComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +35,8 @@ import { ResultsComponent } from './components/results/results.component';
     MatCardModule,
     MatButtonModule,
     MatIconModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]

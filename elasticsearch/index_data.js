@@ -13,21 +13,109 @@ async function run() {
   await client.indices.create({
     index: 'index_sinhala_songs',
     body: {
+      // "settings": {
+      //   "analysis": {
+      //     "analyzer": {
+      //       "my_analyzer": {
+      //         "tokenizer": "my_tokenizer"
+      //       }
+      //     },
+      //     "tokenizer": {
+      //       "my_tokenizer": {
+      //         "type": "edge_ngram",
+      //         "min_gram": 2,
+      //         "max_gram": 10,
+      //         "token_chars": [
+      //           "letter",
+      //           "digit"
+      //         ]
+      //       }
+      //     }
+      //   }
+      // },
+      "settings": {
+        "analysis": {
+          "analyzer": {
+            "my_analyzer": {
+              "type": "custom",
+              "tokenizer": "icu_tokenizer",
+              "filter": ["customNgram"]
+            }
+          },
+          "filter": {
+            "customNgram": {
+              "type": "edge_ngram",
+              "min_gram": "4",
+              "max_gram": "18",
+              "side": "front"
+            }
+          }
+
+        }
+      },
       "mappings": {
         "properties": {
-          "artist": { "type": "text" },
+          "artist": {
+            "type": "text",
+            "fields": {
+              "raw": { 
+                "type":  "keyword"
+              }
+            },
+            "analyzer": "my_analyzer"
+          },
           "shares": { "type": "integer" },
           "formattedLyrics": { "type": "text" },
           "unformattedLyrics": { "type": "text" },
-          "title": { "type": "text" },
+          "title": {
+            "type": "text",
+            "fields": {
+              "raw": { 
+                "type":  "keyword"
+              }
+            },
+            "analyzer": "my_analyzer"
+          },
           "url": { "type": "text" },
           "viewCount": { "type": "integer" },
           "beat": { "type": "text" },
-          "writer": { "type": "text" },
-          "genre": { "type": "text" },
+          "writer": {
+            "type": "text",
+            "fields": {
+              "raw": { 
+                "type":  "keyword"
+              }
+            },
+            "analyzer": "my_analyzer"
+          },
+          "genre": {
+            "type": "text",
+            "fields": {
+              "raw": { 
+                "type":  "keyword"
+              }
+            },
+            "analyzer": "my_analyzer"
+          },
           "key": { "type": "text" },
-          "composer": { "type": "text" },
-          "movie": { "type": "text" }
+          "composer": {
+            "type": "text",
+            "fields": {
+              "raw": { 
+                "type":  "keyword"
+              }
+            },
+            "analyzer": "my_analyzer"
+          },
+          "movie": {
+            "type": "text",
+            "fields": {
+              "raw": { 
+                "type":  "keyword"
+              }
+            },
+            "analyzer": "my_analyzer"
+          }
         }
       }
     }

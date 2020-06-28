@@ -13,9 +13,10 @@ export class ResultsComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.searchResult.subscribe(results => {
-      this.results = results;
-      console.log(results)
+    this.searchResult.subscribe(data => {
+      console.log(data)
+      this.results = data;
+      console.log(this.results)
     });
   }
 
