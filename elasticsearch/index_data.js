@@ -6,51 +6,35 @@ const client = new Client({
   node: 'http://localhost:9200'
 })
 
-const prettifiedData = require('../../songs_prettify.json')
+const prettifiedData = require('../data/songs_prettify.json')
 
 
 async function run() {
   await client.indices.create({
     index: 'index_sinhala_songs',
     body: {
-      // "settings": {
-      //   "analysis": {
-      //     "analyzer": {
-      //       "my_analyzer": {
-      //         "tokenizer": "my_tokenizer"
-      //       }
-      //     },
-      //     "tokenizer": {
-      //       "my_tokenizer": {
-      //         "type": "edge_ngram",
-      //         "min_gram": 2,
-      //         "max_gram": 10,
-      //         "token_chars": [
-      //           "letter",
-      //           "digit"
-      //         ]
-      //       }
-      //     }
-      //   }
-      // },
       "settings": {
         "analysis": {
           "analyzer": {
             "my_analyzer": {
               "type": "custom",
               "tokenizer": "icu_tokenizer",
-              "filter": ["customNgram"]
+              "filter": ["customNgramFilter", "customStopWordFilter"]
             }
           },
           "filter": {
-            "customNgram": {
+            "customNgramFilter": {
               "type": "edge_ngram",
               "min_gram": "4",
               "max_gram": "18",
               "side": "front"
+            },
+            "customStopWordFilter": {
+              "type": "stop",
+              "ignore_case": true,
+              "stopwords": ["ගත්කරු", "රචකයා", "ලියන්නා", "ලියන", "රචිත", "ලියපු", "ලියව්‌ව", "රචනා", "රචක", "ලියන්", "ලිවූ", "ගායකයා", "ගයනවා", "ගායනා", "ගායනා", "ගැයු", "ගයන", "කිව්", "කිවු", "සංගීත", "සංගීතවත්", "සංගීතය", "වර්ගය", "වර්‍ගයේ", "වර්ගයේම", "වර්ගයේ", "වැනි", "ඇතුලත්", "ඇතුලු", "විදියේ", "විදිහේ", "හොඳම", "ජනප්‍රිය", "ප්‍රචලිත", "ප්‍රසිද්ධම", "හොදම", "ජනප්‍රියම", "ලස්සනම", "ගීත", "සිංදු", "ගී", "සින්දු"]
             }
           }
-
         }
       },
       "mappings": {
@@ -58,8 +42,8 @@ async function run() {
           "artist": {
             "type": "text",
             "fields": {
-              "raw": { 
-                "type":  "keyword"
+              "raw": {
+                "type": "keyword"
               }
             },
             "analyzer": "my_analyzer"
@@ -70,8 +54,8 @@ async function run() {
           "title": {
             "type": "text",
             "fields": {
-              "raw": { 
-                "type":  "keyword"
+              "raw": {
+                "type": "keyword"
               }
             },
             "analyzer": "my_analyzer"
@@ -82,8 +66,8 @@ async function run() {
           "writer": {
             "type": "text",
             "fields": {
-              "raw": { 
-                "type":  "keyword"
+              "raw": {
+                "type": "keyword"
               }
             },
             "analyzer": "my_analyzer"
@@ -91,8 +75,8 @@ async function run() {
           "genre": {
             "type": "text",
             "fields": {
-              "raw": { 
-                "type":  "keyword"
+              "raw": {
+                "type": "keyword"
               }
             },
             "analyzer": "my_analyzer"
@@ -101,8 +85,8 @@ async function run() {
           "composer": {
             "type": "text",
             "fields": {
-              "raw": { 
-                "type":  "keyword"
+              "raw": {
+                "type": "keyword"
               }
             },
             "analyzer": "my_analyzer"
@@ -110,8 +94,8 @@ async function run() {
           "movie": {
             "type": "text",
             "fields": {
-              "raw": { 
-                "type":  "keyword"
+              "raw": {
+                "type": "keyword"
               }
             },
             "analyzer": "my_analyzer"
@@ -129,16 +113,10 @@ async function run() {
 
   if (bulkResponse.errors) {
     const erroredDocuments = []
-    // The items array has the same order of the dataset we just indexed.
-    // The presence of the `error` key indicates that the operation
-    // that we did for the document has failed.
     bulkResponse.items.forEach((action, i) => {
       const operation = Object.keys(action)[0]
       if (action[operation].error) {
         erroredDocuments.push({
-          // If the status is 429 it means that you can retry the document,
-          // otherwise it's very likely a mapping error, and you should
-          // fix the document before to try it again.
           status: action[operation].status,
           error: action[operation].error,
           operation: body[i * 2],

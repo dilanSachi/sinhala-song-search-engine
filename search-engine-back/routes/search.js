@@ -121,7 +121,7 @@ router.post('/', async function (req, res) {
         body: {
             size: size,
             _source: {
-                includes: ["artist", "title", "writer", "composer", "genre", "formattedLyrics"]
+                includes: ["artist", "title", "writer", "composer", "genre", "formattedLyrics", "key", "beat"]
             },
             sort: sort_method,
             // explain: true,
@@ -130,13 +130,12 @@ router.post('/', async function (req, res) {
                     query: query.trim(),
                     fields: [`artist^${b_artist}`, `movie^${b_movie}`, `title^${b_title}`,
                     `composer^${b_composer}`, `genre^${b_genre}`, `writer^${b_writer}`, `movie^${b_movie}`,
-                    `unformattedLyrics^${b_unformatted_lyrics}`],
+                    `unformattedLyrics^${b_unformatted_lyrics}`, `key`, `beat`],
                     operator: "or",
                     type: field_type
                 }
             },
             aggs: {
-                // "hat_prices" : { "sum" : { "field" : "artists" } }
                 "genre_filter": {
                     terms: {
                         field: "genre.raw",

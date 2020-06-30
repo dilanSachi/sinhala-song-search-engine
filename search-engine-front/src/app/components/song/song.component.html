@@ -18,6 +18,7 @@
                 <mat-card-subtitle>Lyrics - {{result._source.writer}}</mat-card-subtitle>
                 <mat-card-subtitle>Music - {{result._source.composer}}</mat-card-subtitle>
                 <mat-card-subtitle>Genre - {{result._source.genre}}</mat-card-subtitle>
+                <mat-card-subtitle>Key,Beat - {{result._source.key}}, {{result._source.beat}}</mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
                 {{result._source.formattedLyrics}}

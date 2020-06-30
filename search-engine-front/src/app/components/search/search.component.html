@@ -36,7 +36,7 @@
     <button mat-button color="primary" class="dropdown-button" [matMenuTriggerFor]="menuGenre">Filter
         By Genre</button>
     <mat-menu #menuGenre="matMenu">
-        <button *ngFor="let item of aggregations.genre_filter.buckets" mat-menu-item (click)="test(item.key, item.doc_count)">{{item.key}}
+        <button *ngFor="let item of aggregations.genre_filter.buckets" mat-menu-item (click)="filterByGenre(item.key)">{{item.key}}
             ({{item.doc_count}})</button>
     </mat-menu>
 </div>

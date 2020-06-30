@@ -17,7 +17,6 @@ export class SongComponent implements OnInit {
 
   clicked() {
     this.isClicked = !this.isClicked;
-    console.log('c')
     console.log(this.result)
   }
 

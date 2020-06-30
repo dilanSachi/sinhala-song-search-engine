@@ -16,7 +16,7 @@ class SinhalaSongBookCrawler(scrapy.Spider):
     ]
 
     def writeToJson(self):
-        with open("/home/dilan/Private/Education/Semester 7/Data Mining/IR Project/original_data/original_data.json", 'a', encoding="utf8") as outfile:
+        with open("/home/dilan/Private/Education/Semester 7/Data Mining/IR Project/data/original_data.json", 'a', encoding="utf8") as outfile:
             json.dump(self.data, outfile, ensure_ascii=False)
 
     def parse(self, response):
@@ -43,7 +43,7 @@ class SinhalaSongBookCrawler(scrapy.Spider):
         print(self.counter)
         print()
         print()
-        if (self.counter == 120):
+        if (self.counter == 1090):
             print()
             self.writeToJson()
             raise scrapy.exceptions.CloseSpider('Reached Limit')

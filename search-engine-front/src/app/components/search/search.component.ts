@@ -92,9 +92,9 @@ export class SearchComponent implements OnInit {
     this.resultEvent.emit(newArr);
   }
 
-  test(key, count) {
-    this.query = key + ' ' + this.query + ' ' + count;
-    this.search();
-  }
+  // filter(key, count) {
+  //   this.query = key + ' ' + this.query + ' ' + count;
+  //   this.search();
+  // }
 
 }

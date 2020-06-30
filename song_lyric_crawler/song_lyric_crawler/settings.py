@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Scrapy settings for sinhala_song_corpus project
+# Scrapy settings for song_lyric_crawler project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -9,14 +9,14 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'sinhala_song_corpus'
+BOT_NAME = 'song_lyric_crawler'
 
-SPIDER_MODULES = ['sinhala_song_corpus.spiders']
-NEWSPIDER_MODULE = 'sinhala_song_corpus.spiders'
+SPIDER_MODULES = ['song_lyric_crawler.spiders']
+NEWSPIDER_MODULE = 'song_lyric_crawler.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'sinhala_song_corpus (+http://www.yourdomain.com)'
+#USER_AGENT = 'song_lyric_crawler (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
@@ -47,13 +47,13 @@ ROBOTSTXT_OBEY = True
 # Enable or disable spider middlewares
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
-#    'sinhala_song_corpus.middlewares.SinhalaSongCorpusSpiderMiddleware': 543,
+#    'song_lyric_crawler.middlewares.SongLyricCrawlerSpiderMiddleware': 543,
 #}
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #DOWNLOADER_MIDDLEWARES = {
-#    'sinhala_song_corpus.middlewares.SinhalaSongCorpusDownloaderMiddleware': 543,
+#    'song_lyric_crawler.middlewares.SongLyricCrawlerDownloaderMiddleware': 543,
 #}
 
 # Enable or disable extensions
@@ -65,7 +65,7 @@ ROBOTSTXT_OBEY = True
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 #ITEM_PIPELINES = {
-#    'sinhala_song_corpus.pipelines.SinhalaSongCorpusPipeline': 300,
+#    'song_lyric_crawler.pipelines.SongLyricCrawlerPipeline': 300,
 #}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
