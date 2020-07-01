@@ -14,24 +14,18 @@ router.post('/', async function (req, res) {
     var query_words = query.trim().split(" ");
     var removing_query_words = [];
 
-    console.log(query)
-
     var size = 100;
 
     var field_type = '';
 
     var b_artist = 1;
-    var b_shares = 1;
     var b_unformatted_lyrics = 1;
     var b_title = 1;
-    var b_view_count = 1;
-    var b_beat = 1;
     var b_writer = 1;
     var b_genre = 1;
-    var b_key = 1;
     var b_composer = 1;
     var b_movie = 1;
-
+Che
     var sorting = 0;
     var range = 0;
     var sort_method = [];
@@ -91,30 +85,17 @@ router.post('/', async function (req, res) {
             }
         });
     }
-
-    console.log(b_artist)
-    console.log(b_writer)
-    console.log(b_composer)
-    console.log(b_genre)
-    console.log(b_movie)
-    console.log(sorting)
-    console.log(range)
-
     if (range == 0 && sorting > 0) {
         size = 10;
-        // sort_method = [{ viewCount: { order: "desc" } }];
+        sort_method = [{ viewCount: { order: "desc" } }];
     } else if (range > 0 || sorting > 0) {
         size = range;
-        // sort_method = [{ viewCount: { order: "desc" } }];
+        sort_method = [{ viewCount: { order: "desc" } }];
     }
 
     removing_query_words.forEach(word => {
         query = query.replace(word, '');
     });
-
-    console.log(query)
-    console.log(query.trim().length)
-    console.log('blej')
 
     var result = await client.search({
         index: 'index_sinhala_songs',
@@ -124,7 +105,6 @@ router.post('/', async function (req, res) {
                 includes: ["artist", "title", "writer", "composer", "genre", "formattedLyrics", "key", "beat"]
             },
             sort: sort_method,
-            // explain: true,
             query: {
                 multi_match: {
                     query: query.trim(),
@@ -163,8 +143,6 @@ router.post('/', async function (req, res) {
             }
         }
     });
-
-    console.log(result.body.aggregations)
 
     res.send({
         aggs: result.body.aggregations,

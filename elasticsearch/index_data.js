@@ -6,7 +6,7 @@ const client = new Client({
   node: 'http://localhost:9200'
 })
 
-const prettifiedData = require('../data/songs_prettify.json')
+const prettifiedData = require('../data/formatted_data.json')
 
 
 async function run() {
