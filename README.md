@@ -43,7 +43,7 @@ The search engine contains about 1000 sinhala song lyrics in sinhala letters. Th
 ## Details about the Dataset
 
 * artist - the artist of the song
-* shares - the no. of shares of the sogn
+* shares - the no. of shares of the song
 * formattedLyrics - the lyrics with linebreaks for display purpose
 * unformattedLyrics - the lyrics with linebreaks removed for searching
 * title - title of the song
