@@ -65,6 +65,7 @@ The search engine contains about 1000 sinhala song lyrics in sinhala letters. Th
 
 ## How to Setup
 
+1. After downloading ElasticSearch, install ICU Analyser plugin by running ```sudo bin/elasticsearch-plugin install analysis-icu``` in order to activate the ICU Tokenizer
 1. Start an ElasticSearch instance on port 9200
 2. Start a Kibana instance if you need to view the indexes
 3. Run `npm install` followed by `node index_data.js` inside elasticsearch directory to create the index and index the songs
@@ -76,13 +77,13 @@ The search engine contains about 1000 sinhala song lyrics in sinhala letters. Th
 
 ### Tokenization
 
-Tokenization is used to correctly map the user input to the relative fields. For tokenization, [Edge n-gram tokenizer](https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis-edgengram-tokenizer.html#analysis-edgengram-tokenizer) is a built in text alayzer in ElasticSearch is used. Here, the edge_ngram tokenizer first breaks text down into words whenever it encounters one of a list of specified characters, then it emits N-grams of each word where the start of the N-gram is anchored to the beginning of the word. The `min_gram` is specified as 4 here and `max_gram` is specified as 18. As an example, 
+[ICU Tokenizer](https://www.elastic.co/guide/en/elasticsearch/plugins/current/analysis-icu-tokenizer.html) is used to tokenize text into words on word boundaries. It is like a standard tokenizer, but it have better support for Asian languages.
+
+And also N-gram tokenization is used to correctly map the user input to the relative fields. For N-gram tokenization, [Edge n-gram tokenizer](https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis-edgengram-tokenizer.html#analysis-edgengram-tokenizer) which is a built in text alayzer in ElasticSearch is used. Here, the edge_ngram tokenizer first breaks text down into words whenever it encounters one of a list of specified characters, then it emits N-grams of each word where the start of the N-gram is anchored to the beginning of the word. The `min_gram` is specified as 4 here and `max_gram` is specified as 18. As an example, 
 
     කරුණාරත්න අබේසේකර ලියපු සින්දු will be broken down into, කරුණාර, කරුණාරත්, කරුණාරත්න, අබේසේක, අබේසේකර etc.
 
 With this, search engine can easily map user input to correct words even if the user misses some characters in the word.
-
-And also [ICU Tokenizer](https://www.elastic.co/guide/en/elasticsearch/plugins/current/analysis-icu-tokenizer.html) is used to tokenize text into words on word boundaries. It is like a standard tokenizer, but it have better support for Asian languages.
 
 ### Stop Token Filtering
 
