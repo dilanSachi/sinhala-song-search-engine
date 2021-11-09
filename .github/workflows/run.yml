@@ -4,7 +4,7 @@ on:
     inputs:
       tests:
         description: >
-          Array of test names
+          Array of test names \n
           Example-["route_guide_unary","route_guide_client_streaming"]
         required: false
       clusterName:
@@ -30,4 +30,5 @@ jobs:
           workflow: showTest
           repo: dilanSachi/GitWorkflowTest
           token: ${{ secrets.GIT_PAT }}
+          ref: refs/heads/main
           inputs: '{ "owner": "${{ github.event.inputs.tests }}", "repo": ${{ steps.setRuntimeUrl.outputs.runtimeUrl}}, "package": "asaf", "version": "12124" }'
