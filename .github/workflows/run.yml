@@ -24,6 +24,11 @@ jobs:
           printf "::set-output name=runtimeUrl::%s" $(curl -H "Accept: application/vnd.github.v3+json" \
             https://api.github.com/repos/ballerina-platform/module-ballerina-grpc/actions/artifacts | \
             jq '[.artifacts[] | select(.name=="ballerina-runtime" and .expired==false)]|max|.archive_download_url')
+      - name: Format test names
+        id: formatTestNames
+        shell: bash
+        run: |
+          printf "::set-output name=testNames::%s" $(${{ github.event.inputs.tests }} | jq -c '["/"+.[]+"/"]')
       - name: Invoke standard library load test workflow
         uses: benc-uk/workflow-dispatch@v1
         with:
@@ -31,4 +36,4 @@ jobs:
           repo: dilanSachi/GitWorkflowTest
           token: ${{ secrets.GIT_PAT }}
           ref: refs/heads/main
-          inputs: '{ "owner": \"${{ github.event.inputs.tests }}\", "repo": ${{ steps.setRuntimeUrl.outputs.runtimeUrl}}, "package": "asaf", "version": "12124" }'
+          inputs: '{ "owner": "${{ steps.setRuntimeUrl.outputs.testNames }}", "repo": ${{ steps.setRuntimeUrl.outputs.runtimeUrl}}, "package": "asaf", "version": "12124" }'
