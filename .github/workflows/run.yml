@@ -30,7 +30,7 @@ jobs:
         run: |
           printf "::set-output name=testNames::%s" $(echo '${{ github.event.inputs.tests }}' | jq -c '["/"+.[]+"/"]')
           IN="bla@some.com,john@home.com"
-          testsInput=(${IN//,/ })
+          testsInput=(${github.event.inputs.tests//,/ })
           testsCount=${#testsInput[@]}
           testsOutput=""
           for (( i=0; i<$testsCount; i++ ));
@@ -38,7 +38,7 @@ jobs:
           	echo "${testsInput[$i]}";
           	testsOutput+=\\'"'${testsInput[$i]}\\'"',
           done
-          echo [${testsOutput:1:-1}]
+          echo [${testsOutput:0:-1}]
       - name: Invoke standard library load test workflow
         uses: benc-uk/workflow-dispatch@v1
         with:
