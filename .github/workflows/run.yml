@@ -28,7 +28,6 @@ jobs:
         id: formatTestNames
         shell: bash
         run: |
-#          printf "::set-output name=testNames::%s" $(echo '${{ github.event.inputs.tests }}' | jq -c '["/"+.[]+"/"]')
           IN="${{github.event.inputs.tests}}"
           testsInput=(${IN//,/ })
           testsCount=${#testsInput[@]}
@@ -39,6 +38,9 @@ jobs:
           	testsOutput+=\\'"'${testsInput[$i]}\\'"',
           done
           echo [${testsOutput:0:-1}]
+
+#          printf "::set-output name=testNames::%s" $(echo '${{ github.event.inputs.tests }}' | jq -c '["/"+.[]+"/"]')
+
 #      - name: Invoke standard library load test workflow
 #        uses: benc-uk/workflow-dispatch@v1
 #        with:
