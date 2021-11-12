@@ -28,7 +28,7 @@ jobs:
         id: formatTestNames
         shell: bash
         run: |
-          printf "::set-output name=testNames::%s" $(${{ github.event.inputs.tests }} | jq -c '["/"+.[]+"/"]')
+          printf "::set-output name=testNames::%s" $(echo '${{ github.event.inputs.tests }}' | jq -c '["/"+.[]+"/"]')
       - name: Invoke standard library load test workflow
         uses: benc-uk/workflow-dispatch@v1
         with:
@@ -36,4 +36,4 @@ jobs:
           repo: dilanSachi/GitWorkflowTest
           token: ${{ secrets.GIT_PAT }}
           ref: refs/heads/main
-          inputs: '{ "owner": "${{ steps.setRuntimeUrl.outputs.testNames }}", "repo": ${{ steps.setRuntimeUrl.outputs.runtimeUrl}}, "package": "asaf", "version": "12124" }'
+          inputs: '{ "owner": "${{ steps.formatTestNames.outputs.testNames }}", "repo": ${{ steps.setRuntimeUrl.outputs.runtimeUrl}}, "package": "asaf", "version": "12124" }'
