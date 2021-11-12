@@ -29,7 +29,7 @@ jobs:
         shell: bash
         run: |
           tests="${{github.event.inputs.tests}}"
-          if [ ! "$IN" = "" ]; then
+          if [ ! "$tests" = "" ]; then
             testsInput=(${tests//,/ })
             testsCount=${#testsInput[@]}
             testsOutput=""
@@ -41,7 +41,7 @@ jobs:
             echo [${testsOutput:0:-1}]
             printf "::set-output name=testNames::%s" [${testsOutput:0:-1}]
           else
-          	printf "::set-output name=testNames::%s" tests
+          	printf "::set-output name=testNames::%s" $tests
           fi
       - name: Invoke standard library load test workflow
         uses: benc-uk/workflow-dispatch@v1
