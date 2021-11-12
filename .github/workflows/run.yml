@@ -29,7 +29,8 @@ jobs:
         shell: bash
         run: |
           printf "::set-output name=testNames::%s" $(echo '${{ github.event.inputs.tests }}' | jq -c '["/"+.[]+"/"]')
-          testsInput=(${${{ github.event.inputs.tests }}//,/ })
+          IN="bla@some.com,john@home.com"
+          testsInput=(${IN//,/ })
           testsCount=${#testsInput[@]}
           testsOutput=""
           for (( i=0; i<$testsCount; i++ ));
