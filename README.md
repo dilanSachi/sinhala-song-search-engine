@@ -93,7 +93,7 @@ Another filter used is the [Stop Token filter](https://www.elastic.co/guide/en/e
 
 This is a technique used to boost individual fields such that they count more towards the relevance score at the query time. The search query is scanned by the backend prior to sending to ElasticSeach to identify specific words like `ලියන`, `රචිත`, `ලියපු`, `ගායනා`, `ගායනා`, `ගැයු`, `වර්‍ගයේ`, `වර්ගයේම`, `වර්ගයේ`, `ජනප්‍රිය`, `ප්‍රචලිත`, `ප්‍රසිද්ධම`, `සිංදු`, `ගී` and the relevant fields are boosted according to the query. As an example,
 
-    If the user enters `අබේසේකර ලියපු සින්දු`, the backend will identify the word `ලියපු` and will identify that the user is searching for songs that a certain composer has composed. Therefore, when searching, the composer field will be boosted more than the other fields.
+    If the user enters `අබේසේකර ලියපු සින්දු`, the backend will identify the word `ලියපු` and will identify that the user is searching for songs that a certain composer has composed. Therefore, when searching, the composer field will be boosted more than other fields.
 
 ### Facets/ Aggregations
 
