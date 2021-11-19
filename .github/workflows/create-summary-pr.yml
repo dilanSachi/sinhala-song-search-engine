@@ -21,7 +21,7 @@ jobs:
       - name: My echo
         run: echo ${{ steps.checkPRs.outputs.prExists }}
       - name: Create pull request for new summary
-        if: ${{ steps.checkPRs.outputs.prExists == 'true' }}
+        if: ${{ steps.checkPRs.outputs.prExists }}
         run: gh pr create --title "[Automated] Update summary csv files" --body "Update summary csv files"
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_PAT }}
