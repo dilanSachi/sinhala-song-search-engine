@@ -17,7 +17,7 @@ jobs:
         run: |
           printf "::set-output name=prExists::%s" $(gh pr list --json headRefName --jq '.[]| .headRefName | match("nightly-")')
       - name: Create pull request for new summary
-        if: prExists == false
+        if: steps.formatTestNames.outputs.prExists == false
         run: gh pr create --title "[Automated] Update summary csv files" --body "Update summary csv files"
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_PAT }}
