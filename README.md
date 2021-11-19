@@ -1,5 +1,5 @@
 # Sinhala Song Search Engine
-A project done for module CS4642 - Data Mining &amp; Information Retrieval
+A project done for hte module CS4642 - Data Mining &amp; Information Retrieval
 
 ## Introduction
 
