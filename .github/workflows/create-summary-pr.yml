@@ -1,0 +1,23 @@
+name: Create Automated Summary PR for Load Tests
+on:
+  push:
+    branches:
+      - 'nightly-**'
+    paths:
+      - 'README.md'
+jobs:
+  createPullRequest:
+    name: Create Summary Update PR
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Check for already
+        id: checkPRs
+        shell: bash
+        run: |
+          printf "::set-output name=prExists::%s" $(gh pr list --json headRefName --jq '.[]| .headRefName | match("nightly-")')
+      - name: Create pull request for new summary
+        if: prExists == false
+        run: gh pr create --title "[Automated] Update summary csv files" --body "Update summary csv files"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GIT_PAT }}
