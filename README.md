@@ -9,7 +9,7 @@ This repository contains the source code for a Sinhala Song Search Engine develo
 
 The search engine contains about 1000 sinhala song lyrics in sinhala letters. The songs were scraped from [Sinhala Songbook](https://sinhalasongbook.com/). The search engine offers following features for users.
 
-1. Searching songs using the Title, Lyric, Artist, Genre, Composer, Movie, Beat, Key, and Music.
+1. Searching songs using the Title, Lyric, Artist, Genre, Coaamposer, Movie, Beat, Key, and Music.
 2. Spell correction support.
     * අමරදේ හොදම සින්දු, අමරදේව හොදම සින්දු will give the same result as අමරදේවගේ හොදම සින්දු.
 3. Faceted search.
