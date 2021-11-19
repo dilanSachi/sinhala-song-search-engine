@@ -5,7 +5,7 @@ A project done for the module CS4642 - Data Mining &amp; Information Retrieval
 
 ![Search Engine](resources/home_ex.png)
 
-This repository contains the source code for a Sinhala Song Search Engine developed using [Scrapy](https://scrapy.org/) as the scraping framework, [ElasticSearch](https://www.elastic.co/) as the search engine, and [NodeJS](https://nodejs.org/en/) and [Angular](https://angular.io/) as the web frameworks.
+This repository contains the source code for a Sinhala Song Search Engine developed using the [Scrapy](https://scrapy.org/) as the scraping framework, [ElasticSearch](https://www.elastic.co/) as the search engine, and [NodeJS](https://nodejs.org/en/) and [Angular](https://angular.io/) as the web frameworks.
 
 The search engine contains about 1000 sinhala song lyrics in sinhala letters. The songs were scraped from [Sinhala Songbook](https://sinhalasongbook.com/). The search engine offers following features for the users.
 
