@@ -15,7 +15,7 @@ jobs:
         id: checkPRs
         shell: bash
         run: |
-          printf "::set-output name=prExists::%s" $(gh pr list --json headRefName --jq '.[]| .headRefName | match("nightly-")')
+          printf "::set-output name=prExists::%s" $(gh pr list --json headRefName --jq 'isempty(.[]| .headRefName | match("nightly-"))')
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_PAT }}
       - name: My echo
