@@ -19,7 +19,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_PAT }}
       - name: Create pull request for new summary
-        if: steps.formatTestNames.outputs.prExists == false
+        if: ${{ steps.formatTestNames.outputs.prExists == false }}
         run: gh pr create --title "[Automated] Update summary csv files" --body "Update summary csv files"
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_PAT }}
