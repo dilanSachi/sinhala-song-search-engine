@@ -31,4 +31,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GIT_PAT }}
       - name: Fail workflow
         if: ${{ github.event.client_payload.status == 'failed' }}
-        run: exit 1
+        run: |
+          echo "Load test "${{ github.event.client_payload.test_case }}" failed with status: "${{ github.event.client_payload.status }} "and error rate: "${{ github.event.client_payload.errorRate }}
+          exit 1
