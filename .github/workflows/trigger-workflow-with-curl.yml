@@ -1,7 +1,7 @@
 name: Process load test results
 on:
   repository_dispatch:
-    types: [perf]
+    types: [grpc-load-test]
 
 jobs:
   build:
