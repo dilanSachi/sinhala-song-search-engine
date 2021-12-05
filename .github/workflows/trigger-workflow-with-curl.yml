@@ -24,7 +24,7 @@ jobs:
           test_scenario="${{ github.event.client_payload.test_case }}"
           git checkout -b $branch_name
           echo ${{ github.event.client_payload.result }} >> song_lyric_crawler/$test_scenario/results/summary.csv
-          git add song-lyric-crawler/$test_scenario/results/summary.csv
+          git add song_lyric_crawler/$test_scenario/results/summary.csv
           git commit -m "Update $test_scenario test results on $(date)"
           git push origin "${branch_name}"
         env:
