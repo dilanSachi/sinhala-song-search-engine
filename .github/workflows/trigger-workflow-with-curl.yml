@@ -1,0 +1,35 @@
+name: Process load test results
+on:
+  repository_dispatch:
+    types: [perf]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Prints payload
+        run: |
+          echo ${{ github.event.client_payload.status }}
+          results="${{ github.event.client_payload.result }}"
+          echo $results
+          echo ${{ github.event.client_payload.errorRate }}
+      - name: Process results
+        if: ${{ github.event.client_payload.status == 'success' }}
+        run: |
+          git config --global user.email "dilansachinthanos@gmail.com"
+          git config --global user.name "dilanSachi"
+          branch_name="nightly-${{github.event.client_payload.test_case}}-$(date +%s -u)"
+          test_scenario="${{ github.event.client_payload.test_case }}"
+          git checkout -b $branch_name
+          ls
+          echo ${{ github.event.client_payload.result }} >> sinhala-song-search-engine/song-lyric-crawler/$test_scenario/results/summary.csv
+          git add sinhala-song-search-engine/song-lyric-crawler/$test_scenario/results/summary.csv
+          git commit -m "Update $test_scenario test results on $(date)"
+          git push origin "${branch_name}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GIT_PAT }}
+      - name: Fail workflow
+        if: ${{ github.event.client_payload.status == 'failed' }}
+        run: exit 1
