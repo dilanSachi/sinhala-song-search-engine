@@ -50,4 +50,4 @@ jobs:
           repo: dilanSachi/GitWorkflowTest
           token: ${{ secrets.GIT_PAT }}
           ref: refs/heads/main
-          inputs: '{ "owner": "${{ steps.formatTestNames.outputs.testNames }}", "repo": ${{ steps.setRuntimeUrl.outputs.runtimeUrl}}, "package": "asaf", "version": "12124" }'
+          inputs: '{ "owner": "${{ steps.formatTestNames.outputs.testNames }}", "repo": ${{ steps.setRuntimeUrl.outputs.runtimeUrl}}, "package": "${{ github.event.inputs.clusterName }}", "version": "12124" }'
