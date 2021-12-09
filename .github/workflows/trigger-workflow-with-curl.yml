@@ -23,6 +23,7 @@ jobs:
           branch_name="load-test-results"
           test_scenario="${{ github.event.client_payload.name }}"
           git checkout -B $branch_name
+          git pull origin $branch_name
           echo ${{ github.event.client_payload.result }} >> song_lyric_crawler/$test_scenario/results/summary.csv
           git add song_lyric_crawler/$test_scenario/results/summary.csv
           git commit -m "Update $test_scenario test results on $(date)"
