@@ -25,7 +25,7 @@ jobs:
           git fetch
           echo $(git show-ref --verify --quiet refs/heads/"${branch_name}" || echo '-b') "${branch_name}" eeee
           git checkout $(git show-ref --verify --quiet refs/heads/"${branch_name}" || echo '-b') "${branch_name}"
-          git pull origin "${branch_name}"
+          git pull origin "${branch_name}">/dev/null
           echo ${{ github.event.client_payload.result }} >> song_lyric_crawler/$test_scenario/results/summary.csv
           git add song_lyric_crawler/$test_scenario/results/summary.csv
           git commit -m "Update $test_scenario test results on $(date)"
