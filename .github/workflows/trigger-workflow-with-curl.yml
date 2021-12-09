@@ -20,8 +20,8 @@ jobs:
         run: |
           git config --global user.email "dilansachinthanos@gmail.com"
           git config --global user.name "dilanSachi"
-          branch_name="nightly-${{github.event.client_payload.test_case}}-$(date +%s -u)"
-          test_scenario="${{ github.event.client_payload.test_case }}"
+          branch_name="nightly-${{github.event.client_payload.name}}-$(date +%s -u)"
+          test_scenario="${{ github.event.client_payload.name }}"
           git checkout -b $branch_name
           echo ${{ github.event.client_payload.result }} >> song_lyric_crawler/$test_scenario/results/summary.csv
           git add song_lyric_crawler/$test_scenario/results/summary.csv
@@ -43,5 +43,5 @@ jobs:
       - name: Fail workflow
         if: ${{ github.event.client_payload.status != 'success' }}
         run: |
-          echo "Load test "${{ github.event.client_payload.test_case }}" failed with status: "${{ github.event.client_payload.status }} "and error rate: "${{ github.event.client_payload.errorRate }}
+          echo "Load test "${{ github.event.client_payload.name }}" failed with status: "${{ github.event.client_payload.status }} "and error rate: "${{ github.event.client_payload.errorRate }}
           exit 1
