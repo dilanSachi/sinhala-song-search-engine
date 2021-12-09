@@ -20,7 +20,7 @@ jobs:
         run: |
           git config --global user.email "dilansachinthanos@gmail.com"
           git config --global user.name "dilanSachi"
-          branch_name="nightly-${{github.event.client_payload.name}}-$(date +%s -u)"
+          branch_name="load-test-results"
           test_scenario="${{ github.event.client_payload.name }}"
           git checkout -b $branch_name
           echo ${{ github.event.client_payload.result }} >> song_lyric_crawler/$test_scenario/results/summary.csv
