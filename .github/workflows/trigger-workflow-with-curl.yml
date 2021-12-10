@@ -34,7 +34,7 @@ jobs:
         if: ${{ github.event.client_payload.status == 'success' }}
         run: gh pr review --approve
         env:
-          GITHUB_TOKEN: ${{ secrets.GIT_PAT }}
+          GITHUB_TOKEN: ${{ secrets.S_PAT }}
       - name: Merge PR
         if: ${{ github.event.client_payload.status == 'success' }}
         run: gh pr merge --auto --delete-branch
