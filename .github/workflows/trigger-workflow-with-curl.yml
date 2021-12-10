@@ -30,6 +30,11 @@ jobs:
           git push origin "${branch_name}"
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_PAT }}
+      - name: Create pull request for new summary
+        if: ${{ github.event.client_payload.status == 'success' }}
+        run: gh pr create --title "[Automated] Update summary csv files" --body "Update summary csv files"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GIT_PAT }}
       - name: Approve PR
         if: ${{ github.event.client_payload.status == 'success' }}
         run: gh pr review --approve
