@@ -30,16 +30,14 @@ jobs:
           git push origin "${branch_name}"
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_PAT }}
-      - name: Check for existing PRs
+      - name: Approve PR
         if: ${{ github.event.client_payload.status == 'success' }}
-        id: checkPRs
-        shell: bash
-        run: printf "::set-output name=prNotExists::%s" $(gh pr list --json headRefName --jq 'isempty(.[]| .headRefName | match("load-test-results"))')
+        run: gh pr review --approve
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_PAT }}
-      - name: Create pull request for new summary
-        if: ${{ steps.checkPRs.outputs.prNotExists == 'true' && github.event.client_payload.status == 'success'}}
-        run: gh pr create --title "[Automated] Update summary csv files" --body "Update summary csv files"
+      - name: Merge PR
+        if: ${{ github.event.client_payload.status == 'success' }}
+        run: gh pr merge --auto --delete-branch
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_PAT }}
       - name: Fail workflow
