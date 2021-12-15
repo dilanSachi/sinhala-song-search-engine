@@ -46,11 +46,9 @@ jobs:
           status="NOT COMPLETED"
           while [ ! -z "$status" ]
           do
-            echo $(gh pr status --json statusCheckRollup)
+            sleep 5
             status=$(gh pr status --jq '.currentBranch .statusCheckRollup[] | select(.status!="COMPLETED")' --json statusCheckRollup)
-            sleep 2
           done
-          echo "finished"
           gh pr merge --merge --delete-branch
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_PAT }}
