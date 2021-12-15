@@ -42,7 +42,15 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.S_PAT }}
       - name: Merge PR
         if: ${{ github.event.client_payload.status == 'success' }}
-        run: gh pr merge --merge --delete-branch
+        run: |
+          status="NOT COMPLETED"
+          while [ ! -z "$status" ]
+          do
+            status=$(gh pr status --jq '.currentBranch .statusCheckRollup[] | select(.status!="COMPLETED")' --json statusCheckRollup)
+            sleep 2
+          done
+          echo "finished"
+          gh pr merge --merge --delete-branch
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_PAT }}
       - name: Fail workflow
