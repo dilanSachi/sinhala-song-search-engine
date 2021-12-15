@@ -42,7 +42,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.S_PAT }}
       - name: Merge PR
         if: ${{ github.event.client_payload.status == 'success' }}
-        run: gh pr merge --merge --delete-branch
+        run: gh pr merge --merge --auto --delete-branch
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_PAT }}
       - name: Fail workflow
