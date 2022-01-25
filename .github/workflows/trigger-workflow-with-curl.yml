@@ -29,13 +29,14 @@ jobs:
             if [[ $host == "success" ]]
             then
               echo $(echo "$result" | jq -r '.result')
-              echo $(echo "$result" | jq -r '.result') >> song_lyric_crawler/$(echo "$result" | jq -r '.name')/results/summary.csv
+              test_scenario=$(echo "$result" | jq -r '.name')
+              echo $(echo "$result" | jq -r '.result') >> song_lyric_crawler/$test_scenario/results/summary.csv
+              git add song_lyric_crawler/$test_scenario/results/summary.csv
+              git commit -m "Update $test_scenario test results on $(date)"
             else
               echo $(echo "$result" | jq -r '.errorRate')
             fi
           done
-          git add song_lyric_crawler/$test_scenario/results/summary.csv
-          git commit -m "Update $test_scenario test results on $(date)"
           git push origin "${branch_name}"
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_PAT }}
