@@ -4,18 +4,11 @@ on:
     types: [grpc-load-test]
 
 jobs:
-  build:
+  process-results:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      - name: Prints payload
-        run: |
-          results='${{ toJson(github.event.client_payload.results) }}'
-          echo $results | jq
-      - name: Process array
-        run: |
-          results='${{ toJson(github.event.client_payload.results) }}'
       - name: Process results
         id: processResults
         run: |
@@ -30,12 +23,12 @@ jobs:
             test_scenario=$(echo "$result" | jq -r '.name')
             if [[ $status == "success" ]]
             then
-              echo $(echo "$result" | jq -r '.result') >> song_lyric_crawler/$test_scenario/results/summary.csv
-              git add song_lyric_crawler/$test_scenario/results/summary.csv
+              echo $(echo "$result" | jq -r '.result') >> load-tests/$test_scenario/results/summary.csv
+              git add load-tests/$test_scenario/results/summary.csv
               git commit -m "Update $test_scenario test results on $(date)"
               printf "::set-output name=hasPassed::true"
             else
-              echo $test_scenario " test has failed with error rate " $(echo "$result" | jq -r '.errorRate')
+              echo $test_scenario "test has failed with error rate" $(echo "$result" | jq -r '.errorRate')
               printf "::set-output name=hasFailed::true"
             fi
           done
