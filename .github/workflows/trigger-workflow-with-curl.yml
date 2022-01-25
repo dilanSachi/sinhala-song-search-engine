@@ -12,7 +12,7 @@ jobs:
       - name: Prints payload
         run: |
           results="${{ toJson(github.event.client_payload.results) }}"
-          echo $results
+          echo $results | jq
       - name: Process results
         if: ${{ github.event.client_payload.status == 'success' }}
         run: |
