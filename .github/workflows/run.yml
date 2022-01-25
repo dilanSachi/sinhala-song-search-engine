@@ -10,12 +10,22 @@ on:
       clusterName:
         description: 'Cluster name'
         required: false
+  schedule:
+    - cron: '30 6 * * *'
 jobs:
   invokeLoadTests:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Process cluster name
+        id: processClusterName
+        run: |
+          clusterName="${{github.event.inputs.clusterName}}"
+          if [ ! "$tests" = "" ]; then
+            clusterName="grpc-perf-cluster-test"
+          fi
+          printf "::set-output name=clusterName::%s" $clusterName
       - name: Get latest ballerina runtime artifact
         id: setRuntimeUrl
         shell: bash
@@ -49,4 +59,4 @@ jobs:
           repo: dilanSachi/GitWorkflowTest
           token: ${{ secrets.GIT_PAT }}
           ref: refs/heads/main
-          inputs: '{ "owner": "${{ steps.formatTestNames.outputs.testNames }}", "repo": ${{ steps.setRuntimeUrl.outputs.runtimeUrl}}, "package": "${{ github.event.inputs.clusterName }}", "version": "12124" }'
+          inputs: '{ "owner": "${{ steps.formatTestNames.outputs.testNames }}", "repo": ${{ steps.setRuntimeUrl.outputs.runtimeUrl}}, "package": "${{ steps.formatTestNames.outputs.clusterName }}", "version": "12124" }'
