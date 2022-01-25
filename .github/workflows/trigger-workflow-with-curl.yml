@@ -11,7 +11,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Prints payload
         run: |
-          results="${{toJson(github.event.client_payload.results) }}"
+          results="${{ toJson(github.event.client_payload.results) }}"
           echo $results
       - name: Process results
         if: ${{ github.event.client_payload.status == 'success' }}
