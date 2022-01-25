@@ -26,10 +26,10 @@ jobs:
           git checkout $branch_name || git checkout -b $branch_name
           echo '${{ toJson(github.event.client_payload.results) }}' | jq -c '.[]' |
           while read -r result; do
-            status=$(echo "$result" | jq -r '.status');
+            status=$(echo "$result" | jq -r '.status')
+            test_scenario=$(echo "$result" | jq -r '.name')
             if [[ $status == "success" ]]
             then
-              test_scenario=$(echo "$result" | jq -r '.name')
               echo $(echo "$result" | jq -r '.result') >> song_lyric_crawler/$test_scenario/results/summary.csv
               git add song_lyric_crawler/$test_scenario/results/summary.csv
               git commit -m "Update $test_scenario test results on $(date)"
