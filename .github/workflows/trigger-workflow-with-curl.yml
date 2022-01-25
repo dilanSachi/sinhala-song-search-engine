@@ -23,8 +23,8 @@ jobs:
             test_scenario=$(echo "$result" | jq -r '.name')
             if [[ $status == "success" ]]
             then
-              echo $(echo "$result" | jq -r '.result') >> load-tests/$test_scenario/results/summary.csv
-              git add load-tests/$test_scenario/results/summary.csv
+              echo $(echo "$result" | jq -r '.result') >> song_lyric_crawler/$test_scenario/results/summary.csv
+              git add song_lyric_crawler/$test_scenario/results/summary.csv
               git commit -m "Update $test_scenario test results on $(date)"
               printf "::set-output name=hasPassed::true"
             else
