@@ -17,6 +17,7 @@ jobs:
         run: |
           results='${{ toJson(github.event.client_payload.results) }}'
       - name: Process results
+        id: processResults
         run: |
           git config --global user.email "dilansachinthanos@gmail.com"
           git config --global user.name "dilanSachi"
@@ -24,31 +25,35 @@ jobs:
           git pull
           git checkout $branch_name || git checkout -b $branch_name
           echo '${{ toJson(github.event.client_payload.results) }}' | jq -c '.[]' |
-          while ss=$"\n" read -r result; do
-            host=$(echo "$result" | jq -r '.status');
-            if [[ $host == "success" ]]
+          while read -r result; do
+            status=$(echo "$result" | jq -r '.status');
+            if [[ $status == "success" ]]
             then
-              echo $(echo "$result" | jq -r '.result')
               test_scenario=$(echo "$result" | jq -r '.name')
               echo $(echo "$result" | jq -r '.result') >> song_lyric_crawler/$test_scenario/results/summary.csv
               git add song_lyric_crawler/$test_scenario/results/summary.csv
               git commit -m "Update $test_scenario test results on $(date)"
+              printf "::set-output name=hasPassed::true"
             else
-              echo $(echo "$result" | jq -r '.errorRate')
+              echo $test_scenario " test has failed with error rate " $(echo "$result" | jq -r '.errorRate')
+              printf "::set-output name=hasFailed::true"
             fi
           done
           git push origin "${branch_name}"
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_PAT }}
       - name: Create pull request for new summary
+        if: ${{ steps.processResults.outputs.hasPassed }}
         run: gh pr create --title "[Automated] Update summary csv files" --body "Update summary csv files"
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_PAT }}
       - name: Approve PR
+        if: ${{ steps.processResults.outputs.hasPassed }}
         run: gh pr review --approve
         env:
           GITHUB_TOKEN: ${{ secrets.S_PAT }}
       - name: Merge PR
+        if: ${{ steps.processResults.outputs.hasPassed }}
         run: |
           status="NOT COMPLETED"
           while [ ! -z "$status" ]
@@ -60,3 +65,9 @@ jobs:
           gh pr merge --merge --delete-branch
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_PAT }}
+      - name: Fail workflow
+        if: ${{ steps.processResults.outputs.hasFailed }}
+        run: |
+          echo "One or more load tests have been failed"
+          echo '${{ toJson(github.event.client_payload.results) }}'
+          exit 1
