@@ -22,7 +22,7 @@ jobs:
         id: processClusterName
         run: |
           clusterName="${{github.event.inputs.clusterName}}"
-          if [ ! "$tests" = "" ]; then
+          if [ "$clusterName" = "" ]; then
             clusterName="grpc-perf-cluster-test"
           fi
           printf "::set-output name=clusterName::%s" $clusterName
