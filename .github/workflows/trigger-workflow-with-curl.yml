@@ -38,7 +38,7 @@ jobs:
       - name: Create pull request for new summary
         id: createPR
         if: ${{ steps.processResults.outputs.hasPassed }}
-        run: printf "::set-output name=prUrl::$(gh pr create --title "[Automated] Update summary csv files" --body "Update summary csv files")
+        run: printf "::set-output name=prUrl::$(gh pr create --title "[Automated] Update summary csv files" --body "Update summary csv files")"
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_PAT }}
       - name: Approve PR
