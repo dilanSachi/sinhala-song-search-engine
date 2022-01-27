@@ -43,17 +43,19 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GIT_PAT }}
       - name: Approve PR
         if: ${{ steps.processResults.outputs.hasPassed }}
-        run: gh pr review --approve ${{ steps.createPR.outputs.prUrl }}
+        run: |
+          sleep 5
+          gh pr review --approve ${{ steps.createPR.outputs.prUrl }}
         env:
           GITHUB_TOKEN: ${{ secrets.S_PAT }}
       - name: Merge PR
         if: ${{ steps.processResults.outputs.hasPassed }}
         run: |
-          status="NOT COMPLETED"
-          while [ ! -z "$status" ]
+          checkCount="0"
+          while [ "$checkCount" != "1" ]
           do
             sleep 20
-            status=$(gh pr status --jq '.currentBranch .statusCheckRollup[] | select(.status!="COMPLETED") | select(.context!="license/cla")' --json statusCheckRollup)
+            checkCount=$(gh pr status --jq '[.currentBranch .statusCheckRollup[] | select((.conclusion=="SUCCESS") and ((.name=="Build on Ubuntu") or (.name=="Build on Windows") or (.name=="codecov/project")))]|length' --json statusCheckRollup)
           done
           sleep 20
           gh pr merge --merge --delete-branch
