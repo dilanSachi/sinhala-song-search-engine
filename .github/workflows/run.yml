@@ -11,7 +11,7 @@ on:
         description: 'Cluster name'
         required: false
   schedule:
-    - cron: '15 * * * *'
+    - cron: '0 0 * * *'
 jobs:
   invokeLoadTests:
     runs-on: ubuntu-latest
