@@ -36,13 +36,14 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_PAT }}
       - name: Create pull request for new summary
+        id: createPR
         if: ${{ steps.processResults.outputs.hasPassed }}
-        run: gh pr create --title "[Automated] Update summary csv files" --body "Update summary csv files"
+        run: printf "::set-output name=prUrl::$(gh pr create --title "[Automated] Update summary csv files" --body "Update summary csv files")
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_PAT }}
       - name: Approve PR
         if: ${{ steps.processResults.outputs.hasPassed }}
-        run: gh pr review --approve
+        run: gh pr review --approve ${{ steps.createPR.outputs.prUrl }}
         env:
           GITHUB_TOKEN: ${{ secrets.S_PAT }}
       - name: Merge PR
