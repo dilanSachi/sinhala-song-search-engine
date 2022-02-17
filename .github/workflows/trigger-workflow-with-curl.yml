@@ -57,8 +57,8 @@ jobs:
           do
             sleep 20
             checkCount=$(gh pr status --jq '[.currentBranch .statusCheckRollup[] | select((.conclusion=="SUCCESS") and ((.name=="Build on Ubuntu") or (.name=="Build on Windows") or (.name=="codecov/project")))]|length' --json statusCheckRollup)
-            failedStatus=$(gh pr status --jq '[.currentBranch .statusCheckRollup[] | select((.conclusion=="FAILURE") and ((.name=="Build on Ubuntu") or (.name=="Build on Windows") or (.name=="codecov/project")))]' --json statusCheckRollup)
-            if [[ ! -z "$failedStatus" ]]
+            failedStatus=$(gh pr status --jq '[.currentBranch .statusCheckRollup[] | select((.conclusion=="FAILURE") and ((.name=="Build on Ubuntu") or (.name=="Build on Windows") or (.name=="codecov/project")))]|length' --json statusCheckRollup)
+            if [[ "$failedStatus" != "0" ]]
             then
               echo "PR Build has failed"
               exit 1
