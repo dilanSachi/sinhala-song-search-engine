@@ -52,7 +52,7 @@ jobs:
         if: ${{ steps.processResults.outputs.hasPassed }}
         run: |
           checkCount="0"
-          while [ "$checkCount" != "1" ]
+          while [ "$checkCount" != "2" ]
           do
             sleep 20
             checkCount=$(gh pr status --jq '[.currentBranch .statusCheckRollup[] | select((.conclusion=="SUCCESS") and ((.name=="Build on Ubuntu") or (.name=="Build on Windows") or (.name=="codecov/project")))]|length' --json statusCheckRollup)
@@ -66,4 +66,5 @@ jobs:
         run: |
           echo "One or more load tests have been failed"
           echo '${{ toJson(github.event.client_payload.results) }}'
+          git push origin :load-test-results
           exit 1
