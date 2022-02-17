@@ -32,7 +32,7 @@ jobs:
               printf "::set-output name=hasFailed::true"
             fi
           done
-          if [[ ${{ hasPassed }} == "true" ]]
+          if [[ $hasPassed == "true" ]]
           then
             git push origin "${branch_name}"
           fi
