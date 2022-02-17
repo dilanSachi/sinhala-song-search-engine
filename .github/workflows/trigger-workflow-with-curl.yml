@@ -32,7 +32,7 @@ jobs:
               printf "::set-output name=hasFailed::true"
             fi
           done
-          if [[ ${{ steps.processResults.outputs.hasPassed }} ]]
+          if [[ ${{ steps.processResults.outputs.hasPassed }} == "true" ]]
           then
             git push origin "${branch_name}"
           fi
