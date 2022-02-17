@@ -15,7 +15,9 @@ jobs:
           distribution: 'adopt'
           java-version: 11
       - name: Build with Gradle
-        run: sleep 30s
+        run: |
+          sleep 10s
+          exit 1
   ubuntu-build-2:
     name: Build on Ubuntu
     runs-on: ubuntu-latest
@@ -28,4 +30,4 @@ jobs:
           distribution: 'adopt'
           java-version: 11
       - name: Build with Gradle
-        run: sleep 30s
+        run: sleep 10s
