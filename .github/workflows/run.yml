@@ -30,9 +30,9 @@ jobs:
         id: setRuntimeUrl
         shell: bash
         run: |
-          printf "::set-output name=runtimeUrl::%s" $(curl -H "Accept: application/vnd.github.v3+json" \
+          printf "runtimeUrl=%s" $(curl -H "Accept: application/vnd.github.v3+json" \
             https://api.github.com/repos/ballerina-platform/module-ballerina-grpc/actions/artifacts | \
-            jq '[.artifacts[] | select(.name=="ballerina-runtime" and .expired==false)]|max|.archive_download_url')
+            jq '[.artifacts[] | select(.name=="ballerina-runtime" and .expired==false)]|max|.archive_download_url') >> $GITHUB_OUTPUT
       - name: Format test names
         id: formatTestNames
         shell: bash
