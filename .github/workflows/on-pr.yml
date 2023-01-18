@@ -17,6 +17,11 @@ jobs:
       - name: Build with Gradle
         run: |
           sleep 10s
+      - name: Generate Codecov Report
+        if: github.event_name == 'pull_request'
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
   ubuntu-build-2:
     name: Build on Ubuntu
     runs-on: ubuntu-latest
