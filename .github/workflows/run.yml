@@ -59,4 +59,4 @@ jobs:
           repo: dilanSachi/GitWorkflowTest
           token: ${{ secrets.GIT_PAT }}
           ref: refs/heads/main
-          inputs: '{ "owner": "${{ steps.formatTestNames.outputs.testNames }}", "repo": ${{ steps.setRuntimeUrl.outputs.runtimeUrl}}, "package": "${{ steps.processClusterName.outputs.clusterName }}", "version": "" }'
+          inputs: '{ "owner": "${{ steps.formatTestNames.outputs.testNames }}", "repo": ${{ steps.setRuntimeUrl.outputs.runtimeUrl}}, "package": "${{ steps.processClusterName.outputs.clusterName }}", "version": "1231", "patch": "" }'
