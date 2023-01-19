@@ -25,6 +25,7 @@ jobs:
           with: |
             token: ${{ secrets.CODECOV_TOKEN }}
             fail_ci_if_error: true
+            files: ./coverage-report.xml
           attempt_limit: 3
           attempt_delay: 2000
   ubuntu-build-2:
