@@ -19,10 +19,14 @@ jobs:
           sleep 10s
       - name: Generate Codecov Report
         if: github.event_name == 'pull_request'
-        uses: codecov/codecov-action@v2
+        uses: Wandalen/wretry.action@master
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          fail_ci_if_error: true
+          action: codecov/codecov-action@v2
+          with: |
+            token: ${{ secrets.CODECOV_TOKEN }}
+            fail_ci_if_error: true
+          attempt_limit: 3
+          attempt_delay: 2000
   ubuntu-build-2:
     name: Build on Ubuntu
     runs-on: ubuntu-latest
