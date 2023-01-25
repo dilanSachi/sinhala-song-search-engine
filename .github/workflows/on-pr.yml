@@ -38,9 +38,9 @@ jobs:
           fail_ci_if_error: true
           token: ${{ secrets.CODECOV_TOKEN }}
       - name: Wait after upload failure
-        if: steps.uploadReport1.outcome == 'failure' && steps.uploadReport2.outcome == 'failure'
+        if: steps.uploadReport2.outcome == 'failure'
         run: |
           sleep 10s
       - name: Generate CodeCov Report Try 3
-        if: steps.uploadReport1.outcome == 'failure' && steps.uploadReport2.outcome == 'failure'
+        if: steps.uploadReport2.outcome == 'failure'
         uses: codecov/codecov-action@v2
