@@ -23,7 +23,6 @@ jobs:
         uses: codecov/codecov-action@v2
         continue-on-error: true
         with:
-          action: codecov/codecov-action@v2
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: true
           files: ./coverage-report.xml
@@ -35,7 +34,6 @@ jobs:
           if: github.event_name == 'pull_request' && steps.codecovStep1.outcome == 'failure'
           uses: codecov/codecov-action@v2
           with:
-            action: codecov/codecov-action@v2
             token: ${{ secrets.CODECOV_TOKEN }}
             fail_ci_if_error: false
             files: ./coverage-report.xml
