@@ -16,28 +16,26 @@ jobs:
           java-version: 11
       - name: Build with Gradle
         run: |
-          sleep 10s
+          sleep 5s
       - name: Generate Codecov Report
         if: github.event_name == 'pull_request'
-        uses: Wandalen/wretry.action@master
+        id: codecovStep1
+        uses: codecov/codecov-action@v2
+        continue-on-error: true
         with:
           action: codecov/codecov-action@v2
-          with: |
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
+          files: ./coverage-report.xml
+        - name: Wait after failure
+          if: steps.codecovStep1.outcome == 'failure'
+          run: |
+            sleep 10s
+        - name: Generate Codecov Report V2
+          if: github.event_name == 'pull_request' && steps.codecovStep1.outcome == 'failure'
+          uses: codecov/codecov-action@v2
+          with:
+            action: codecov/codecov-action@v2
             token: ${{ secrets.CODECOV_TOKEN }}
-            fail_ci_if_error: true
+            fail_ci_if_error: false
             files: ./coverage-report.xml
-          attempt_limit: 3
-          attempt_delay: 2000
-  ubuntu-build-2:
-    name: Build on Ubuntu
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-      - name: Set up JDK 11
-        uses: actions/setup-java@v2
-        with:
-          distribution: 'adopt'
-          java-version: 11
-      - name: Build with Gradle
-        run: sleep 10s
