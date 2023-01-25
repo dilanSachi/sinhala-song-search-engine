@@ -24,6 +24,7 @@ jobs:
         continue-on-error: true
         with:
           fail_ci_if_error: true
+          token: {{ secrets.CODECOV_TOKEN }}
       - name: Wait after upload failure
         if: steps.uploadReport1.outcome == 'failure'
         run: |
@@ -35,6 +36,7 @@ jobs:
         continue-on-error: true
         with:
           fail_ci_if_error: true
+          token: {{ secrets.CODECOV_TOKEN }}
       - name: Wait after upload failure
         if: steps.uploadReport1.outcome == 'failure' && steps.uploadReport2.outcome == 'failure'
         run: |
