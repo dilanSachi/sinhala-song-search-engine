@@ -17,23 +17,28 @@ jobs:
       - name: Build with Gradle
         run: |
           sleep 5s
-      - name: Generate Codecov Report
+      - name: Generate CodeCov Report Try 1
         if: github.event_name == 'pull_request'
-        id: codecovStep1
+        id: uploadReport1
         uses: codecov/codecov-action@v2
         continue-on-error: true
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: true
-          files: ./coverage-report.xml
-      - name: Wait after failure
-        if: steps.codecovStep1.outcome == 'failure'
+      - name: Wait after upload failure
+        if: steps.uploadReport1.outcome == 'failure'
         run: |
           sleep 10s
-      - name: Generate Codecov Report V2
-        if: github.event_name == 'pull_request' && steps.codecovStep1.outcome == 'failure'
+      - name: Generate CodeCov Report Try 2
+        if: steps.uploadReport1.outcome == 'failure'
+        id: uploadReport2
         uses: codecov/codecov-action@v2
+        continue-on-error: true
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          fail_ci_if_error: false
-          files: ./coverage-report.xml
+          fail_ci_if_error: true
+      - name: Wait after upload failure
+        if: steps.uploadReport1.outcome == 'failure' && steps.uploadReport2.outcome == 'failure'
+        run: |
+          sleep 10s
+      - name: Generate CodeCov Report Try 3
+        if: steps.uploadReport1.outcome == 'failure' && steps.uploadReport2.outcome == 'failure'
+        uses: codecov/codecov-action@v2
