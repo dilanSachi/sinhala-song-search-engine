@@ -26,14 +26,14 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: true
           files: ./coverage-report.xml
-        - name: Wait after failure
-          if: steps.codecovStep1.outcome == 'failure'
-          run: |
-            sleep 10s
-        - name: Generate Codecov Report V2
-          if: github.event_name == 'pull_request' && steps.codecovStep1.outcome == 'failure'
-          uses: codecov/codecov-action@v2
-          with:
-            token: ${{ secrets.CODECOV_TOKEN }}
-            fail_ci_if_error: false
-            files: ./coverage-report.xml
+      - name: Wait after failure
+        if: steps.codecovStep1.outcome == 'failure'
+        run: |
+          sleep 10s
+      - name: Generate Codecov Report V2
+        if: github.event_name == 'pull_request' && steps.codecovStep1.outcome == 'failure'
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: false
+          files: ./coverage-report.xml
